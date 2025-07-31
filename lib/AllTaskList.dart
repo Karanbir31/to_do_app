@@ -14,13 +14,10 @@ class AllTaskList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("To Do App"),
-         backgroundColor: Colors.lightBlueAccent,
-         foregroundColor: Colors.white,
       ),
 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightBlueAccent,
-        foregroundColor: Colors.white,
+
         onPressed: () {
           Navigator.push(
             context,

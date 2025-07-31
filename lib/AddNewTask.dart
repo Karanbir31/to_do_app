@@ -9,6 +9,8 @@ class AddNewTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final theme = Theme.of(context);
+
     final taskProvider = Provider.of<ToDoProvider>(context);
     final formKey = GlobalKey<FormState>();
     final TextEditingController titleController = TextEditingController();
@@ -18,9 +20,11 @@ class AddNewTask extends StatelessWidget {
       key: formKey,
       child:  Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
-          foregroundColor: Colors.white,
-          title: Text("New Task"),
+          title: Text(
+              "New Task"
+          ),
+          backgroundColor: theme.colorScheme.primaryContainer,
+          foregroundColor: theme.colorScheme.onPrimaryContainer,
         ),
 
         body: Center(
@@ -54,11 +58,6 @@ class AddNewTask extends StatelessWidget {
               ),
 
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightBlueAccent,
-                  foregroundColor: Colors.white,
-                ),
-
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     taskProvider.addNewTask(
