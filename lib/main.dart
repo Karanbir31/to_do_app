@@ -15,9 +15,17 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ToDoProvider(),
       child: MaterialApp(
+
         title: 'Flutter Demo',
         theme: ThemeData(
+
+
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          textTheme: TextTheme(
+            bodyLarge: TextStyle(
+              fontSize: 40,
+            )
+          )
         ),
         home: const AllTaskList(),
       ),

@@ -6,8 +6,6 @@ import 'package:to_do_app/taskItem.dart';
 class AddNewTask extends StatelessWidget {
   const AddNewTask({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
 
