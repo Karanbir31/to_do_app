@@ -1,57 +1,101 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_app/ToDoProvider.dart';
 import 'package:to_do_app/taskItem.dart';
 
 class AddNewTask extends StatelessWidget {
-  AddNewTask({super.key});
+  const AddNewTask({super.key});
 
-  final formKey = GlobalKey<FormState>();
 
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Form(child: MaterialApp(
-      home: Center(
-        child: Column(
-          children: [
 
-            taskTextField(label: "title",
+    final taskProvider = Provider.of<ToDoProvider>(context);
+    final formKey = GlobalKey<FormState>();
+    final TextEditingController titleController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+
+    return Form(
+      key: formKey,
+      child:  Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.lightBlueAccent,
+          foregroundColor: Colors.white,
+          title: Text("New Task"),
+        ),
+
+        body: Center(
+          child: Column(
+
+            children: [
+
+              SizedBox(height: 120,),
+
+              taskTextField(
+                label: "title",
                 controller: titleController,
                 validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter Something";
+                  }
                   return null;
-                }),
+                },
+              ),
 
-            taskTextField(label: "description",
+
+              taskTextField(
+                label: "description",
                 controller: descriptionController,
                 validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter Something";
+                  }
                   return null;
-                }),
+                },
+              ),
 
-            ElevatedButton(onPressed: () {
-              ToDoProvider().addNewTask(task: TaskItem(
-                  title: titleController.text,
-                  description: descriptionController.text)
-              );
-            }, child: Text("Save"))
-          ],
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlueAccent,
+                  foregroundColor: Colors.white,
+                ),
+
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    taskProvider.addNewTask(
+                      task: TaskItem(
+                        title: titleController.text,
+                        description: descriptionController.text,
+                      ),
+                    );
+
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text("Save", style: TextStyle(fontSize: 18),),
+              ),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
-
 
   Widget taskTextField({
     required String label,
     required TextEditingController controller,
-    required String? Function(String?) validator
+    required String? Function(String?) validator,
   }) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: TextFormField(
+        controller: controller,
+        validator: validator,
+        decoration: InputDecoration(
           label: Text(label),
-          border: OutlineInputBorder()
+          border: OutlineInputBorder(),
+        ),
       ),
     );
   }

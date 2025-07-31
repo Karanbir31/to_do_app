@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/AddNewTask.dart';
+import 'package:to_do_app/ToDoProvider.dart';
 import 'package:to_do_app/taskItem.dart';
 
 class AllTaskList extends StatelessWidget {
@@ -6,41 +9,79 @@ class AllTaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final taskProviders = Provider.of<ToDoProvider>(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("To Do App"),
+        backgroundColor: Colors.lightBlueAccent,
+        foregroundColor: Colors.white,
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.lightBlueAccent,
+        foregroundColor: Colors.white,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => AddNewTask()),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+
+      body:
+          EmptyTaskList(listLength: taskProviders.getAllTask().length) ??
+          ListView.builder(
+            itemCount: taskProviders.getAllTask().length,
+            itemBuilder: (context, index) => taskItem(
+              task: taskProviders.getAllTask()[index],
+              onPressedDelete: () {
+                taskProviders.removeTask(
+                  task: taskProviders.getAllTask()[index],
+                );
+              },
+            ),
+          ),
+    );
   }
 
-  Widget taskItem({required TaskItem task, required Function() onPressedDelete}) {
-    return Container(
-      width: double.maxFinite,
-      height: double.maxFinite,
-      margin: EdgeInsets.all(8),
-      padding: EdgeInsets.all(8),
+  Widget taskItem({
+    required TaskItem task,
+    required Function() onPressedDelete,
+  }) {
+    return Card(
+      margin: EdgeInsets.only(top: 16, right: 16, left: 16),
 
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(),
-        borderRadius: BorderRadius.circular(16),
-      ),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-
-        children: [
-          ListTile(
-            title: Text(
-              task.title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              task.description,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-
-            trailing: IconButton(onPressed: onPressedDelete, icon: Icon(Icons.delete)),
-
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
-        ],
+          subtitleTextStyle: TextStyle(fontSize: 16, color: Colors.black),
+
+          title: Text(task.title),
+          subtitle: Text(task.description),
+
+          trailing: IconButton(
+            onPressed: onPressedDelete,
+            icon: Icon(Icons.delete),
+          ),
+        ),
       ),
     );
+  }
+
+  Widget? EmptyTaskList({required int listLength}) {
+    if (listLength > 0) {
+      return null;
+    }
+
+    return Center(child: Text("Add a task"));
   }
 }

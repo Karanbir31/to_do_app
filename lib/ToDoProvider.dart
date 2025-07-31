@@ -12,4 +12,9 @@ class ToDoProvider with ChangeNotifier{
     notifyListeners();
   }
 
+  void removeTask({required TaskItem task}){
+    allTask.remove(task);
+    notifyListeners();
+  }
+
 }
