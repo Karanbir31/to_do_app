@@ -8,7 +8,6 @@ class AddNewTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final theme = Theme.of(context);
 
     final taskProvider = Provider.of<ToDoProvider>(context);
@@ -18,21 +17,13 @@ class AddNewTask extends StatelessWidget {
 
     return Form(
       key: formKey,
-      child:  Scaffold(
-        appBar: AppBar(
-          title: Text(
-              "New Task"
-          ),
-          backgroundColor: theme.colorScheme.primaryContainer,
-          foregroundColor: theme.colorScheme.onPrimaryContainer,
-        ),
+      child: Scaffold(
+        appBar: AppBar(title: Text("New Task")),
 
         body: Center(
           child: Column(
-
             children: [
-
-              SizedBox(height: 120,),
+              SizedBox(height: 120),
 
               taskTextField(
                 label: "title",
@@ -44,7 +35,6 @@ class AddNewTask extends StatelessWidget {
                   return null;
                 },
               ),
-
 
               taskTextField(
                 label: "description",
@@ -70,7 +60,7 @@ class AddNewTask extends StatelessWidget {
                     Navigator.pop(context);
                   }
                 },
-                child: Text("Save", style: TextStyle(fontSize: 18),),
+                child: Text("Save", style: TextStyle(fontSize: 18)),
               ),
             ],
           ),

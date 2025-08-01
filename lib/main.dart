@@ -15,19 +15,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = View.of(context).platformDispatcher.platformBrightness;
 
     TextTheme textTheme = createTextTheme(context, "Acme", "Advent Pro");
 
     // Create MaterialTheme object from exported theme.dart
-    final MaterialTheme theme = MaterialTheme(textTheme);
-
+    final MaterialThemeCustom theme = MaterialThemeCustom(textTheme);
 
     return ChangeNotifierProvider(
       create: (context) => ToDoProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+        theme:  theme.light(),
+        darkTheme: theme.dark(),
         home: const AllTaskList(),
       ),
     );

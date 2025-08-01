@@ -12,12 +12,9 @@ class AllTaskList extends StatelessWidget {
     final taskProviders = Provider.of<ToDoProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("To Do App"),
-      ),
+      appBar: AppBar(title: Text("To Do App")),
 
       floatingActionButton: FloatingActionButton(
-
         onPressed: () {
           Navigator.push(
             context,
@@ -27,7 +24,8 @@ class AllTaskList extends StatelessWidget {
         child: Icon(Icons.add),
       ),
 
-      body: EmptyTaskList(listLength: taskProviders.getAllTask().length) ??
+      body:
+          EmptyTaskList(listLength: taskProviders.getAllTask().length) ??
           ListView.builder(
             itemCount: taskProviders.getAllTask().length,
             itemBuilder: (context, index) => taskItem(
@@ -54,18 +52,12 @@ class AllTaskList extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
-          titleTextStyle: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-          subtitleTextStyle: TextStyle(fontSize: 16, color: Colors.black),
-
           title: Text(task.title),
-          subtitle: Padding(
 
-              padding:EdgeInsets.only(top: 10),
-              child: Text(task.description)),
+          subtitle: Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: Text(task.description),
+          ),
 
           trailing: IconButton(
             onPressed: onPressedDelete,
@@ -83,5 +75,4 @@ class AllTaskList extends StatelessWidget {
 
     return Center(child: Text("Add a task"));
   }
-
 }
