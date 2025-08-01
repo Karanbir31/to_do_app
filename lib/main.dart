@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/ToDoProvider.dart';
 import 'AllTaskList.dart';
-
 import 'styles/text_theme.dart';
 import 'styles/theme.dart';
 
@@ -28,10 +28,16 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme:  theme.light(),
         darkTheme: theme.dark(),
-        home: const AllTaskList(),
+        home:  AllTaskList(),
       ),
     );
   }
 }
+
+/*GetMaterialApp(
+      home: LanguageScreen(),
+      locale: Locale("en","us")
+      translations: ,
+    );*/
 
 

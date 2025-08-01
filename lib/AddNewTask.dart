@@ -4,16 +4,26 @@ import 'package:to_do_app/ToDoProvider.dart';
 import 'package:to_do_app/taskItem.dart';
 
 class AddNewTask extends StatelessWidget {
-  const AddNewTask({super.key});
+  final TaskItem? task;
+
+  const AddNewTask({super.key, this.task});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    var buttonText = "Save";
     final taskProvider = Provider.of<ToDoProvider>(context);
     final formKey = GlobalKey<FormState>();
     final TextEditingController titleController = TextEditingController();
     final TextEditingController descriptionController = TextEditingController();
+
+
+    if(task !=null){
+      titleController.text = task!.title;
+      descriptionController.text = task!.description;
+      buttonText = "Update";
+    }
 
     return Form(
       key: formKey,
@@ -50,17 +60,22 @@ class AddNewTask extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    taskProvider.addNewTask(
-                      task: TaskItem(
-                        title: titleController.text,
-                        description: descriptionController.text,
-                      ),
-                    );
+                    if(task != null){
+                      taskProvider.updateTask(task: TaskItem(id: task!.id, title: titleController.text, description: descriptionController.text));
 
+                    }else{
+                      taskProvider.addNewTask(
+                        task: TaskItem(
+                          id: 0,
+                          title: titleController.text,
+                          description: descriptionController.text,
+                        ),
+                      );
+                    }
                     Navigator.pop(context);
                   }
                 },
-                child: Text("Save", style: TextStyle(fontSize: 18)),
+                child: Text(buttonText, style: TextStyle(fontSize: 18)),
               ),
             ],
           ),
